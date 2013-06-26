@@ -13,6 +13,8 @@ typedef void (*REVoidIMP)(id, SEL, ...);
 
 @interface NSObject (REResponder)
 
+//+ (void) respondsToSelector:(SEL)selector usingBlock:(id)block;
+
 // Block
 - (void)respondsToSelector:(SEL)selector withKey:(id)key usingBlock:(id)block;
 - (BOOL)hasBlockForSelector:(SEL)selector withKey:(id)key;

@@ -101,38 +101,18 @@ NSString* const REObserverContainerKey = @"container";
 - (void)REObserver_X_removeObserver:(NSObject *)observer fromObjectsAtIndexes:(NSIndexSet *)indexes forKeyPath:(NSString *)keyPath
 {
 	// Filter
-	if (!observer || ![indexes count] || ![keyPath length]) {
-		return;
-	}
-	
+	if (!observer || ![indexes count] || ![keyPath length]) return;
+
 	@synchronized (self) {
 		[self enumerateObjectsAtIndexes:indexes options:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 			// Get observingInfos
-			NSMutableArray *observingInfos;
-			observingInfos = [observer associatedValueForKey:kObservingInfosAssociationKey];
-			
-			// Get observedInfos
-			NSMutableArray *observedInfos;
-			observedInfos = [obj associatedValueForKey:kObservedInfosAssociationKey];
-			
+			NSMutableArray *observingInfos	 = [observer associatedValueForKey:kObservingInfosAssociationKey];
 			// Remove observingInfo
 			[observingInfos enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary *observingInfo, NSUInteger idx, BOOL *stop) {
 				if ([observingInfo[REObserverObservedObjectPointerValueKey] pointerValue] == obj
-					&& [observingInfo[REObserverKeyPathKey] isEqualToString:keyPath]
-				){
+					&& [observingInfo[REObserverKeyPathKey] isEqualToString:keyPath] )
 					// Remove observingInfo
 					[observingInfos removeObject:observingInfo];
-				}
-			}];
-			
-			// Remove observedInfo
-			[observedInfos enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSDictionary *observedInfo, NSUInteger idx, BOOL *stop) {
-				if ([observedInfo[REObserverObservingObjectPointerValueKey] pointerValue] == observer
-					&& [observedInfo[REObserverKeyPathKey] isEqualToString:keyPath]
-				){
-					// Remove observedInfo
-					[observedInfos removeObject:observedInfo];
-				}
 			}];
 		}];
 	}
@@ -141,14 +121,13 @@ NSString* const REObserverContainerKey = @"container";
 	[self REObserver_X_removeObserver:observer fromObjectsAtIndexes:indexes forKeyPath:keyPath];
 }
 
-+ (void)load
++ (void)initialize
 {
 	@autoreleasepool {
 		// Exchange methods…
 		[self exchangeInstanceMethodsWithAdditiveSelectorPrefix:@"REObserver_X_" selectors:
 			@selector(addObserver:toObjectsAtIndexes:forKeyPath:options:context:),
-			@selector(removeObserver:fromObjectsAtIndexes:forKeyPath:),
-			nil
+			@selector(removeObserver:fromObjectsAtIndexes:forKeyPath:),nil
 		];
 	}
 }
@@ -253,10 +232,7 @@ NSString* const REObserverContainerKey = @"container";
 - (void)REObserver_X_removeObserver:(NSObject*)observer forKeyPath:(NSString*)keyPath
 {
 	// Filter
-	if (!observer || ![keyPath length]) {
-		return;
-	}
-	
+	if (!observer || ![keyPath length]) return;
 	@synchronized (self) {
 		// Get observingInfos
 		NSMutableArray *observingInfos;

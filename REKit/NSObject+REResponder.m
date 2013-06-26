@@ -264,7 +264,7 @@ static IMP _dummyBlockImp = NULL;
 	NSMutableString *objCTypes;
 	blockSignature = [NSMethodSignature signatureWithObjCTypes:REBlockGetObjCTypes(block)];
 	objCTypes = [NSMutableString stringWithFormat:@"%@@:", [NSString stringWithCString:[blockSignature methodReturnType] encoding:NSUTF8StringEncoding]];
-	for (NSInteger i = 2; i < [blockSignature numberOfArguments]; i++) {
+	for (NSUInteger i = 2; i < [blockSignature numberOfArguments]; i++) {
 		[objCTypes appendString:[NSString stringWithCString:[blockSignature getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding]];
 	}
 	methodSignature = [NSMethodSignature signatureWithObjCTypes:[objCTypes cStringUsingEncoding:NSUTF8StringEncoding]];
@@ -515,7 +515,7 @@ static IMP _dummyBlockImp = NULL;
 				Protocol **protocols;
 				Protocol *aProtocol;
 				protocols = protocol_copyProtocolList(protocol, &count);
-				for (int i = 0; i < count; i++) {
+				for (NSUInteger i = 0; i < count; i++) {
 					aProtocol = protocols[i];
 					[incorporatedProtocolNames addObject:NSStringFromProtocol(aProtocol)];
 				}

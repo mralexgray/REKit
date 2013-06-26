@@ -15,6 +15,23 @@
 
 @implementation REResponderLogicTests
 
+//- (void)test_returnsStructsOK
+//{
+//	SEL sel = @selector(makeARect);
+//	NSRect rect = NSMakeRect(0,0, 100, 100);
+//	
+//	// Make obj
+//	id obj;
+//	obj = [[[NSObject alloc] init] autorelease];
+//	
+//	// Responds to log method dynamically
+//	[obj respondsToSelector:sel withKey:nil usingBlock:^NSRect(id receiver) {
+//		return NSMakeRect(0,0, 100, 100);
+//	}];
+//	NSRect newRect = (__bridge NSRect)[obj makeARect];
+//	STAssertTrue(NSEqualRects(newRect, rect), @"Rects should be eual");
+//}
+
 - (void)test_respondsToUnimplementedMethod
 {
 	SEL sel = @selector(log);

@@ -6,9 +6,9 @@
 
 #import "REUtil.h"
 
-#if __has_feature(objc_arc)
-	#error This code needs compiler option -fno-objc-arc
-#endif
+//#if __has_feature(objc_arc)
+//	#error This code needs compiler option -fno-objc-arc
+//#endif
 
 
 // Notifications
@@ -58,7 +58,7 @@ void* REBlockGetImplementation(id block)
 	NSMutableString *objCTypes;
 	objCTypes = [NSMutableString string];
 	[objCTypes appendString:[NSString stringWithCString:[self methodReturnType] encoding:NSUTF8StringEncoding]];
-	for (NSInteger i = 0; i < [self numberOfArguments]; i++) {
+	for (NSUInteger i = 0; i < [self numberOfArguments]; i++) {
 		[objCTypes appendString:[NSString stringWithCString:[self getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding]];
 	}
 	
