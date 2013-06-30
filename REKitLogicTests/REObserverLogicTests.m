@@ -48,41 +48,41 @@
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj.name = @"name0";
-	STAssertTrue(observed, @"");
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove observer
 	[obj removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj.name = @"name1";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Remove observer with context
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj.name = @"name2";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj removeObserver:observer forKeyPath:@"name" context:nil];
 	observed = NO;
 	obj.name = @"name3";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Stop observing
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj.name = @"name4";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[observer stopObserving];
 	observed = NO;
 	obj.name = @"name5";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Add observer using block
 	NSDictionary *observingInfo;
@@ -106,41 +106,41 @@
 	};
 	observed = NO;
 	obj.name = @"name6";
-	STAssertTrue(observed, @"");
-	STAssertEqualObjects([observer observingInfos][0], observingInfo, @"");
-	STAssertEqualObjects([obj observedInfos][0], observedInfo, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos][0], observingInfo, @"");
+	XCTAssertEqualObjects([obj observedInfos][0], observedInfo, @"");
 	
 	// Remove observer
 	[obj removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj.name = @"name7";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Remove observer with context
 	observer = [obj addObserverForKeyPath:@"name" options:0 usingBlock:block];
 	observed = NO;
 	obj.name = @"name8";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj removeObserver:observer forKeyPath:@"name" context:nil];
 	observed = NO;
 	obj.name = @"name9";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Stop observing
 	observer = [obj addObserverForKeyPath:@"name" options:0 usingBlock:block];
 	observed = NO;
 	obj.name = @"name10";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[observer stopObserving];
 	observed = NO;
 	obj.name = @"name11";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 }
 
 - (void)test_observingInfosWithContext
@@ -180,41 +180,41 @@
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj.name = @"name0";
-	STAssertTrue(observed, @"");
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove observer
 	[obj removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj.name = @"name1";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove observer with context
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj.name = @"name2";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj removeObserver:observer forKeyPath:@"name" context:context];
 	observed = NO;
 	obj.name = @"name3";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 	
 	// Stop observing
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj.name = @"name4";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[observer stopObserving];
 	observed = NO;
 	obj.name = @"nmae5";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj observedInfos], @[], @"");
 }
 
 - (void)test_observingInfosOfObjectsAtIndexes
@@ -256,30 +256,30 @@
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj0.name = @"name0";
-	STAssertTrue(observed, @"");
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
-	STAssertEqualObjects([obj1 observedInfos], @[], @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([obj1 observedInfos], @[], @"");
 	
 	// Remove observer
 	[objs removeObserver:observer fromObjectsAtIndexes:indexes forKeyPath:@"name"];
 	observed = NO;
 	obj0.name = @"name1";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Remove observer directly
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj0.name = @"name2";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj0 removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj0.name = @"name3";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Add observer with context
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:context];
@@ -297,30 +297,30 @@
 	}];
 	observed = NO;
 	obj0.name = @"name4";
-	STAssertTrue(observed, @"");
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
-	STAssertEqualObjects([obj1 observedInfos], @[], @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([obj1 observedInfos], @[], @"");
 	
 	// Remove observer
 	[objs removeObserver:observer fromObjectsAtIndexes:indexes forKeyPath:@"name"];
 	observed = NO;
 	obj0.name = @"name5";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Remove observer directly without specifying context
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj0.name = @"name6";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj0 removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj0.name = @"name7";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Remove observer directly specifying nil context // Can't remove observer. It's normal behavior.
 //	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:context];
@@ -330,37 +330,37 @@
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj0.name = @"name8";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[obj0 removeObserver:observer forKeyPath:@"name" context:context];
 	observed = NO;
 	obj0.name = @"name9";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Stop observing (withou context)
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:nil];
 	observed = NO;
 	obj0.name = @"name10";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[observer stopObserving];
 	observed = NO;
 	obj0.name = @"name11";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 	
 	// Stop observing (with context)
 	[objs addObserver:observer toObjectsAtIndexes:indexes forKeyPath:@"name" options:0 context:context];
 	observed = NO;
 	obj0.name = @"name12";
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 	[observer stopObserving];
 	observed = NO;
 	obj0.name = @"name13";
-	STAssertFalse(observed, @"");
-	STAssertEqualObjects([observer observingInfos], @[], @"");
-	STAssertEqualObjects([obj0 observedInfos], @[], @"");
+	XCTAssertFalse(observed, @"");
+	XCTAssertEqualObjects([observer observingInfos], @[], @"");
+	XCTAssertEqualObjects([obj0 observedInfos], @[], @"");
 }
 
 - (void)test_addObserverUsingBlock
@@ -380,8 +380,8 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertTrue(observed, @"");
-	STAssertNotNil(dict, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertNotNil(dict, @"");
 }
 
 - (void)test_NSKeyVvalueObservingOptionNew
@@ -397,7 +397,7 @@
 			NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting),
 			NSKeyValueChangeNewKey : @"name",
 		};
-		STAssertEqualObjects(change, dictionary, @"");
+		XCTAssertEqualObjects(change, dictionary, @"");
 	}];
 	obj.name = @"name";
 }
@@ -416,7 +416,7 @@
 			NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting),
 			NSKeyValueChangeOldKey : @"old name",
 		};
-		STAssertEqualObjects(change, dictionary, @"");
+		XCTAssertEqualObjects(change, dictionary, @"");
 	}];
 	obj.name = @"new name";
 }
@@ -432,7 +432,7 @@
 	[obj addObserverForKeyPath:@"name" options:NSKeyValueObservingOptionInitial usingBlock:^(NSDictionary *change) {
 		observed = YES;
 	}];
-	STAssertTrue(observed, @"");
+	XCTAssertTrue(observed, @"");
 }
 
 - (void)test_NSKeyVvalueObservingOptionPrior
@@ -451,17 +451,17 @@
 				NSKeyValueChangeNotificationIsPriorKey : @YES,
 				NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting),
 			};
-			STAssertEqualObjects(change, dictionary, @"");
+			XCTAssertEqualObjects(change, dictionary, @"");
 		}
 		else if (count == 2) {
 			NSDictionary *dictionary;
 			dictionary = @{
 				NSKeyValueChangeKindKey : @(NSKeyValueChangeSetting),
 			};
-			STAssertEqualObjects(change, dictionary, @"");
+			XCTAssertEqualObjects(change, dictionary, @"");
 		}
 		else {
-			STFail(@"");
+			XCTFail(@"");
 		}
 	}];
 	obj.name = @"name";
@@ -487,14 +487,14 @@
 	[obj removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj.name = @"name1";
-	STAssertFalse(observed, @"");
+	XCTAssertFalse(observed, @"");
 	
 	// Add observer then remove it
 	[obj addObserver:observer forKeyPath:@"name" options:0 context:nil];
 	[obj removeObserver:observer forKeyPath:@"name" context:nil];
 	observed = NO;
 	obj.name = @"name2";
-	STAssertFalse(observed, @"");
+	XCTAssertFalse(observed, @"");
 	
 	// Add observer using block then remove it
 	observer = [obj addObserverForKeyPath:@"name" options:0 usingBlock:^(NSDictionary *change) {
@@ -503,7 +503,7 @@
 	[obj removeObserver:observer forKeyPath:@"name"];
 	observed = NO;
 	obj.name = @"name";
-	STAssertFalse(observed, @"");
+	XCTAssertFalse(observed, @"");
 }
 
 - (void)test_stopObserving
@@ -523,7 +523,7 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertFalse(observed, @"");
+	XCTAssertFalse(observed, @"");
 }
 
 - (void)test_observationAfterClassChangeCausedByDynamicBlock
@@ -553,7 +553,7 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertEqualObjects(recognizedName, @"name", @"");
+	XCTAssertEqualObjects(recognizedName, @"name", @"");
 	
 	// Check observingInfos and observedInfos
 	NSArray *observingInfos;
@@ -570,17 +570,17 @@
 		REObserverOptionsKey : @(NSKeyValueObservingOptionNew),
 		REObserverBlockKey : block
 	}];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:@selector(read) withKey:key];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Change name
 	obj.name = @"name2";
-	STAssertEqualObjects(recognizedName, @"name2", @"");
+	XCTAssertEqualObjects(recognizedName, @"name2", @"");
 }
 
 - (void)test_observationAfterClassChangeCausedByOverrideBlock
@@ -610,7 +610,7 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertEqualObjects(recognizedName, @"name", @"");
+	XCTAssertEqualObjects(recognizedName, @"name", @"");
 	
 	// Check observingInfos and observedInfos
 	NSArray *observingInfos;
@@ -627,17 +627,17 @@
 		REObserverOptionsKey : @(NSKeyValueObservingOptionNew),
 		REObserverBlockKey : block
 	}];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:@selector(log) withKey:key];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Change name
 	obj.name = @"name2";
-	STAssertEqualObjects(recognizedName, @"name2", @"");
+	XCTAssertEqualObjects(recognizedName, @"name2", @"");
 }
 
 - (void)test_ordinalObservationAfterClassChangeCausedByDynamicBlock
@@ -665,7 +665,7 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertEqualObjects(recognizedName, @"name", @"");
+	XCTAssertEqualObjects(recognizedName, @"name", @"");
 	
 	// Check observingInfos and observedInfos
 	NSArray *observingInfos;
@@ -680,17 +680,17 @@
 		REObserverKeyPathKey : @"name",
 		REObserverOptionsKey : @(NSKeyValueObservingOptionNew)
 	}];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:@selector(log) withKey:key];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Change name
 	obj.name = @"name2";
-	STAssertEqualObjects(recognizedName, @"name2", @"");
+	XCTAssertEqualObjects(recognizedName, @"name2", @"");
 }
 
 - (void)test_ordinalObservationAfterClassChangeCasedByOverrideBlock
@@ -718,7 +718,7 @@
 	// Change name
 	obj.name = @"name";
 	//
-	STAssertEqualObjects(recognizedName, @"name", @"");
+	XCTAssertEqualObjects(recognizedName, @"name", @"");
 	
 	// Check observingInfos and observedInfos
 	NSArray *observingInfos;
@@ -733,17 +733,17 @@
 		REObserverKeyPathKey : @"name",
 		REObserverOptionsKey : @(NSKeyValueObservingOptionNew)
 	}];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:@selector(log) withKey:key];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj observedInfos], observedInfos, @"");
 	
 	// Change name
 	obj.name = @"name2";
-	STAssertEqualObjects(recognizedName, @"name2", @"");
+	XCTAssertEqualObjects(recognizedName, @"name2", @"");
 }
 
 - (void)test_observationAtIndexes
@@ -770,7 +770,7 @@
 	// Change name
 	obj0.name = @"name";
 	//
-	STAssertEqualObjects(recognizedName, @"name", @"");
+	XCTAssertEqualObjects(recognizedName, @"name", @"");
 	
 	// Check observingInfos and observedInfos
 	NSArray *observingInfos;
@@ -787,17 +787,17 @@
 		REObserverOptionsKey : @(NSKeyValueObservingOptionNew),
 		REObserverContainerKey : objs
 	}];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
 	
 	// Remove block
 	[obj0 removeBlockForSelector:@selector(log) withKey:@"key"];
-	STAssertEqualObjects([observer observingInfos], observingInfos, @"");
-	STAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
+	XCTAssertEqualObjects([observer observingInfos], observingInfos, @"");
+	XCTAssertEqualObjects([obj0 observedInfos], observedInfos, @"");
 	
 	// Change name
 	obj0.name = @"name2";
-	STAssertEqualObjects(obj0.name, @"name2", @"");
+	XCTAssertEqualObjects(obj0.name, @"name2", @"");
 }
 
 - (void)test_stopObservingInDeallocMethod
@@ -814,16 +814,16 @@
 		observer = [obj addObserverForKeyPath:@"name" options:0 usingBlock:^(NSDictionary *change) {
 			observed = YES;
 		}];
-		STAssertTrue([[obj observedInfos] count] == 1, @"");
+		XCTAssertTrue([[obj observedInfos] count] == 1, @"");
 		
 		// Cahnge name
 		obj.name = @"name";
 		
 		// observer will be deallocated…
 	}
-	STAssertTrue(observed, @"");
-	STAssertNotNil(obj, @"");
-	STAssertTrue([[obj observedInfos] count] == 0, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertNotNil(obj, @"");
+	XCTAssertTrue([[obj observedInfos] count] == 0, @"");
 }
 
 - (void)test_stopObservingStartedByOrdinalMethodInDeallocMethod
@@ -840,7 +840,7 @@
 		
 		// observer will be deallocated…
 	}
-	STAssertTrue([[obj observedInfos] count] == 0, @"");
+	XCTAssertTrue([[obj observedInfos] count] == 0, @"");
 }
 
 - (void)test_stopBeingObservedInDeallocMethod
@@ -857,7 +857,7 @@
 		observer = [obj addObserverForKeyPath:@"name" options:0 usingBlock:^(NSDictionary *change) {
 			observed = YES;
 		}];
-		STAssertTrue([[observer observingInfos] count] == 1, @"");
+		XCTAssertTrue([[observer observingInfos] count] == 1, @"");
 		
 		// Retain observer
 		[observer retain];
@@ -867,9 +867,9 @@
 		
 		// Observed object (obj) will be deallocated…
 	}
-	STAssertTrue(observed, @"");
-	STAssertNotNil(observer, @"");
-	STAssertTrue([[observer observingInfos] count] == 0, @"");
+	XCTAssertTrue(observed, @"");
+	XCTAssertNotNil(observer, @"");
+	XCTAssertTrue([[observer observingInfos] count] == 0, @"");
 	
 	// Release observer
 	[observer release];
@@ -891,7 +891,7 @@
 		
 		// Observed object (obj) will be deallocated…
 	}
-	STAssertTrue([[observer observingInfos] count] == 0, @"");
+	XCTAssertTrue([[observer observingInfos] count] == 0, @"");
 }
 
 - (void)test_blockIsDeallocated
@@ -918,18 +918,18 @@
 			released = YES;
 		}];
 		[block respondsToSelector:@selector(copy) withKey:nil usingBlock:^(id receiver) {
-			STFail(@"");
+			XCTFail(@"");
 		}];
 		[block respondsToSelector:@selector(retain) withKey:nil usingBlock:^(id receiver) {
-			STFail(@"");
+			XCTFail(@"");
 		}];
 		
 		// Check retain count of block
-		STAssertEquals(CFGetRetainCount(block), (signed long)1, @"");
+		XCTAssertEquals(CFGetRetainCount(block), (signed long)1, @"");
 	}
 	
 	// Check
-	STAssertTrue(released, @"");
+	XCTAssertTrue(released, @"");
 }
 
 - (void)test_observingInfosAreDeallocated
@@ -962,7 +962,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_observedInfosAreDeallocated
@@ -995,7 +995,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 @end
