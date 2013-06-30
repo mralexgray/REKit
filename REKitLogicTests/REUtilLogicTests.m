@@ -30,7 +30,7 @@
 	
 	// Call willChangeClass
 	[obj willChangeClass:[NSArray class]];
-	STAssertEquals(newClass, [NSArray class], @"");
+	XCTAssertEquals(newClass, [NSArray class], @"");
 }
 
 - (void)test_didChangeClass
@@ -48,7 +48,7 @@
 	
 	// Call didChangeClass
 	[obj didChangeClass:[RETestObject class]];
-	STAssertEquals(oldClass, [RETestObject class], @"");
+	XCTAssertEquals(oldClass, [RETestObject class], @"");
 }
 
 @end

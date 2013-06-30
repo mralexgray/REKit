@@ -13,9 +13,7 @@
 
 @implementation RETestObject
 
-//--------------------------------------------------------------//
 #pragma mark -- Object --
-//--------------------------------------------------------------//
 
 + (instancetype)testObject
 {
@@ -31,9 +29,7 @@
 	return [super automaticallyNotifiesObserversForKey:key];
 }
 
-//--------------------------------------------------------------//
 #pragma mark -- Methods --
-//--------------------------------------------------------------//
 
 - (NSString*)log
 {

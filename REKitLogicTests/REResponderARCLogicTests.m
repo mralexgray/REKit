@@ -11,9 +11,7 @@
 
 @implementation REResponderARCLogicTests
 
-//--------------------------------------------------------------//
 #pragma mark -- Test Case --
-//--------------------------------------------------------------//
 
 - (void)test_associatedContextIsDeallocated
 {
@@ -48,12 +46,12 @@
 		}
 		
 		// Call log method
-		STAssertNoThrow([obj performSelector:@selector(log)], @"");
+		XCTAssertNoThrow([obj performSelector:@selector(log)], @"");
 	}
 	
 	// Check
-	STAssertEqualObjects(string, @"log", @"");
-	STAssertTrue(deallocated, @"");
+	XCTAssertEqualObjects(string, @"log", @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 @end

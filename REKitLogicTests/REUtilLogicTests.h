@@ -4,8 +4,8 @@
  Copyright ©2012 Kazki Miura. All rights reserved.
 */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 
-@interface REUtilLogicTests : SenTestCase
+@interface REUtilLogicTests : XCTestCase
 @end

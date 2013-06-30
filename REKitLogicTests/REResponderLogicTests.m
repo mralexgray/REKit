@@ -46,7 +46,7 @@
 		return @"block";
 	}];
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block", @"");
+	XCTAssertEqualObjects(log, @"block", @"");
 }
 
 - (void)test_overrideHardcodedMethod
@@ -59,7 +59,7 @@
 		return @"Overridden log";
 	}];
 	log = [obj log];
-	STAssertEqualObjects(log, @"Overridden log", @"");
+	XCTAssertEqualObjects(log, @"Overridden log", @"");
 }
 
 - (void)test_dynamicBlockDoesNotAffectOtherInstances
@@ -76,7 +76,7 @@
 	}];
 	
 	// Check
-	STAssertFalse([otherObj respondsToSelector:@selector(log)], @"");
+	XCTAssertFalse([otherObj respondsToSelector:@selector(log)], @"");
 }
 
 - (void)test_overrideBlockDoesNotAffectOtherInstances
@@ -96,7 +96,7 @@
 	
 	// Make other obj
 	string = [otherObj log];
-	STAssertEquals(string, @"log", @"");
+	XCTAssertEquals(string, @"log", @"");
 }
 
 - (void)test_usingObjectInDynamicBlockCausesRetainCycle
@@ -129,7 +129,7 @@
 	}
 	
 	// Check
-	STAssertFalse(deallocated, @"");
+	XCTAssertFalse(deallocated, @"");
 }
 
 - (void)test_usingObjectInOverrideBlockCausesRetainCycle
@@ -162,7 +162,7 @@
 	}
 	
 	// Check
-	STAssertFalse(deallocated, @"");
+	XCTAssertFalse(deallocated, @"");
 }
 
 - (void)test_passingObjectAsKeyCausesRetainCycle
@@ -186,7 +186,7 @@
 	}
 	
 	// Check
-	STAssertFalse(deallocated, @"");
+	XCTAssertFalse(deallocated, @"");
 }
 
 - (void)test_receiverHavingDynamicBlockIsDeallocated
@@ -214,7 +214,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_receiverHavingOverrideBlockIsDeallocated
@@ -241,7 +241,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_keyOfBlockIsDeallocated
@@ -272,7 +272,7 @@
 		}];
 	}
 	
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_keyOfBlockIsDeallocatedWhenObjectIsDeallocated
@@ -309,7 +309,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 //- (void)test_blockIsReleased
@@ -476,8 +476,8 @@
 	}
 	
 	// Check
-	STAssertTrue(isContextDeallocated, @"");
-	STAssertTrue(isObjDeallocated, @"");
+	XCTAssertTrue(isContextDeallocated, @"");
+	XCTAssertTrue(isObjDeallocated, @"");
 }
 
 - (void)test_contextOfSuperblockIsDeallocated
@@ -529,8 +529,8 @@
 	}
 	
 	// Check
-	STAssertTrue(isContextDeallocated, @"");
-	STAssertTrue(isObjDeallocated, @"");
+	XCTAssertTrue(isContextDeallocated, @"");
+	XCTAssertTrue(isObjDeallocated, @"");
 }
 
 - (void)test_contextOfReusedSuperblockIsDeallocated
@@ -586,8 +586,8 @@
 	}
 	
 	// Check
-	STAssertTrue(isContextDeallocated, @"");
-	STAssertTrue(isObjDeallocated, @"");
+	XCTAssertTrue(isContextDeallocated, @"");
+	XCTAssertTrue(isObjDeallocated, @"");
 }
 
 - (void)test_contextOfRemovedBlockIsDeallocated
@@ -627,11 +627,11 @@
 		[obj removeBlockForSelector:@selector(log) withKey:@"key"];
 		
 		// Check
-		STAssertTrue(isContextDeallocated, @"");
+		XCTAssertTrue(isContextDeallocated, @"");
 	}
 	
 	// Check
-	STAssertTrue(isContextDeallocated, @"");
+	XCTAssertTrue(isContextDeallocated, @"");
 }
 
 - (void)test_autoreleasingContextIsDeallocated
@@ -680,13 +680,13 @@
 		}
 		
 		// Log
-		STAssertNoThrow([obj performSelector:@selector(log)], @"");
+		XCTAssertNoThrow([obj performSelector:@selector(log)], @"");
 	}
 	
 	// Check
-	STAssertEqualObjects(string, @"called", @"");
-	STAssertTrue(isContextDeallocated, @"");
-	STAssertTrue(isObjDeallocated, @"");
+	XCTAssertEqualObjects(string, @"called", @"");
+	XCTAssertTrue(isContextDeallocated, @"");
+	XCTAssertTrue(isObjDeallocated, @"");
 }
 
 - (void)test_associatedContextIsDeallocated
@@ -723,15 +723,15 @@
 			}];
 			
 			// Call log method
-			STAssertNoThrow([obj performSelector:@selector(log)], @"");
+			XCTAssertNoThrow([obj performSelector:@selector(log)], @"");
 		}
 		
 		// Call log method
-		STAssertNoThrow([obj performSelector:@selector(log)], @"");
+		XCTAssertNoThrow([obj performSelector:@selector(log)], @"");
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_allowArguments
@@ -749,7 +749,7 @@
 	
 	// Call logWithSuffix: method
 	log = [obj performSelector:@selector(logWithSuffix:) withObject:@"suffix"];
-	STAssertEqualObjects(log, @"block1-suffix", @"");
+	XCTAssertEqualObjects(log, @"block1-suffix", @"");
 }
 
 - (void)test_allowStructures
@@ -779,7 +779,7 @@
 	[invocation setArgument:&size atIndex:3];
 	[invocation invoke];
 	[invocation getReturnValue:&rect];
-	STAssertEquals(rect, CGRectMake(10.0f, 20.0f, 30.0f, 40.0f), @"");
+	XCTAssertEquals(rect, CGRectMake(10.0f, 20.0f, 30.0f, 40.0f), @"");
 }
 
 - (void)test_methodForSelector_executeReturnedIMP
@@ -799,7 +799,7 @@
 	REVoidIMP imp;
 	imp = (REVoidIMP)[obj methodForSelector:@selector(doSomething)];
 	imp(obj, @selector(doSomething));
-	STAssertTrue(called, @"");
+	XCTAssertTrue(called, @"");
 }
 
 - (void)test_hasBlockForSelector_forKey
@@ -813,11 +813,11 @@
 		// Do something
 		receiver = receiver;
 	}];
-	STAssertTrue([obj hasBlockForSelector:@selector(log) withKey:@"key"], @"");
+	XCTAssertTrue([obj hasBlockForSelector:@selector(log) withKey:@"key"], @"");
 	
 	// Remove log block
 	[obj removeBlockForSelector:@selector(log) withKey:@"key"];
-	STAssertTrue(![obj hasBlockForSelector:@selector(log) withKey:@"key"], @"");
+	XCTAssertTrue(![obj hasBlockForSelector:@selector(log) withKey:@"key"], @"");
 }
 
 - (void)test_stackBlockPerSelector
@@ -840,21 +840,21 @@
 	
 	// Perform log
 	string = [obj performSelector:@selector(log)];
-	STAssertEqualObjects(string, @"log", @"");
+	XCTAssertEqualObjects(string, @"log", @"");
 	
 	// Perform say
 	string = [obj performSelector:@selector(say)];
-	STAssertEqualObjects(string, @"say", @"");
+	XCTAssertEqualObjects(string, @"say", @"");
 	
 	// Remove log block
 	[obj removeBlockForSelector:@selector(log) withKey:@"key"];
-	STAssertFalse([obj respondsToSelector:@selector(log)], @"");
+	XCTAssertFalse([obj respondsToSelector:@selector(log)], @"");
 	string = [obj performSelector:@selector(say)];
-	STAssertEqualObjects(string, @"say", @"");
+	XCTAssertEqualObjects(string, @"say", @"");
 	
 	// Remove say block
 	[obj removeBlockForSelector:@selector(say) withKey:@"key"];
-	STAssertFalse([obj respondsToSelector:@selector(say)], @"");
+	XCTAssertFalse([obj respondsToSelector:@selector(say)], @"");
 }
 
 - (void)test_replaceBlock
@@ -878,7 +878,7 @@
 	// Remove block for key
 	[obj removeBlockForSelector:@selector(log) withKey:@"key"];
 	string = [obj log];
-	STAssertEqualObjects(string, @"log", @"");
+	XCTAssertEqualObjects(string, @"log", @"");
 }
 
 - (void)test_stackOfDynamicBlocks
@@ -889,59 +889,59 @@
 	
 	// Make obj
 	obj = [[[NSObject alloc] init] autorelease];
-	STAssertFalse([obj respondsToSelector:sel], @"");
+	XCTAssertFalse([obj respondsToSelector:sel], @"");
 	
 	// Add block1
 	[obj respondsToSelector:sel withKey:@"block1" usingBlock:^NSString*(id receiver) {
 		return @"block1";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block1", @"");
+	XCTAssertEqualObjects(log, @"block1", @"");
 	
 	// Add block2
 	[obj respondsToSelector:sel withKey:@"block2" usingBlock:^NSString*(id receiver) {
 		return @"block2";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Add block3
 	[obj respondsToSelector:sel withKey:@"block3" usingBlock:^NSString*(id receiver) {
 		return @"block3";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block3", @"");
+	XCTAssertEqualObjects(log, @"block3", @"");
 	
 	// Remove block3
 	[obj removeBlockForSelector:sel withKey:@"block3"];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block1
 	[obj removeBlockForSelector:sel withKey:@"block1"];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block2
 	[obj removeBlockForSelector:sel withKey:@"block2"];
-	STAssertFalse([obj respondsToSelector:sel], @"");
+	XCTAssertFalse([obj respondsToSelector:sel], @"");
 	log = [obj performSelector:sel];
-	STAssertNil(log, @"");
+	XCTAssertNil(log, @"");
 }
 
 - (void)test_performDummyBlock
@@ -958,12 +958,12 @@
 		return string;
 	}];
 	string = [obj performSelector:sel withObject:@"Read"];
-	STAssertEqualObjects(string, @"Read", @"");
+	XCTAssertEqualObjects(string, @"Read", @"");
 	
 	// Remove block1
 	[obj removeBlockForSelector:sel withKey:@"block1"];
 	string = [obj performSelector:sel withObject:@"Read"];
-	STAssertNil(string, @"");
+	XCTAssertNil(string, @"");
 }
 
 - (void)test_stackOfOverrideBlocks
@@ -974,61 +974,61 @@
 	
 	// Make obj
 	obj = [RETestObject testObject];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Add bock1
 	[obj respondsToSelector:sel withKey:@"block1" usingBlock:^NSString*(id receiver) {
 		return @"block1";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block1", @"");
+	XCTAssertEqualObjects(log, @"block1", @"");
 	
 	// Add block2
 	[obj respondsToSelector:sel withKey:@"block2" usingBlock:^NSString*(id receiver) {
 		return @"block2";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Add block3
 	[obj respondsToSelector:sel withKey:@"block3" usingBlock:^NSString*(id receiver) {
 		return @"block3";
 	}];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block3", @"");
+	XCTAssertEqualObjects(log, @"block3", @"");
 	
 	// Remove block3
 	[obj removeBlockForSelector:sel withKey:@"block3"];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block1
 	[obj removeBlockForSelector:sel withKey:@"block1"];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block2
 	[obj removeBlockForSelector:sel withKey:@"block2"];
-	STAssertTrue([obj respondsToSelector:sel], @"");
+	XCTAssertTrue([obj respondsToSelector:sel], @"");
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log", @"");
+	XCTAssertEqualObjects(log, @"log", @"");
 }
 
 - (void)test_allowsOverrideOfDynamicBlock
@@ -1047,7 +1047,7 @@
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block1", @"");
+	XCTAssertEqualObjects(log, @"block1", @"");
 	
 	// Override the block
 	[obj respondsToSelector:sel withKey:@"key" usingBlock:^NSString*(id receiver) {
@@ -1056,11 +1056,11 @@
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:sel withKey:@"key"];
-	STAssertFalse([obj respondsToSelector:sel], @"");
+	XCTAssertFalse([obj respondsToSelector:sel], @"");
 }
 
 - (void)test_allowsOverrideOfOverrideBlock
@@ -1079,7 +1079,7 @@
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block1", @"");
+	XCTAssertEqualObjects(log, @"block1", @"");
 	
 	// Override the block
 	[obj respondsToSelector:sel withKey:@"key" usingBlock:^NSString*(id receiver) {
@@ -1088,14 +1088,14 @@
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"block2", @"");
+	XCTAssertEqualObjects(log, @"block2", @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:sel withKey:@"key"];
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log", @"");
+	XCTAssertEqualObjects(log, @"log", @"");
 }
 
 - (void)test_supermethodOf1stDynamicBlock
@@ -1114,7 +1114,7 @@
 		
 		IMP supermethod;
 		supermethod = [receiver supermethodOfCurrentBlock];
-		STAssertNil((id)supermethod, @"");
+		XCTAssertNil((id)supermethod, @"");
 		
 		return @"Dynamic log";
 	}];
@@ -1152,7 +1152,7 @@
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"-block1", @"");
+	XCTAssertEqualObjects(log, @"-block1", @"");
 	
 	// Add block2
 	[obj respondsToSelector:sel withKey:@"block2" usingBlock:^NSString*(id receiver) {
@@ -1174,7 +1174,7 @@
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"-block1-block2", @"");
+	XCTAssertEqualObjects(log, @"-block1-block2", @"");
 	
 	// Add block3
 	[obj respondsToSelector:sel withKey:@"block3" usingBlock:^NSString*(id receiver) {
@@ -1196,25 +1196,25 @@
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"-block1-block2-block3", @"");
+	XCTAssertEqualObjects(log, @"-block1-block2-block3", @"");
 	
 	// Remove block3
 	[obj removeBlockForSelector:sel withKey:@"block3"];
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"-block1-block2", @"");
+	XCTAssertEqualObjects(log, @"-block1-block2", @"");
 	
 	// Remove block1
 	[obj removeBlockForSelector:sel withKey:@"block1"];
 	
 	// Call log method
 	log = [obj performSelector:sel];
-	STAssertEqualObjects(log, @"-block2", @"");
+	XCTAssertEqualObjects(log, @"-block2", @"");
 	
 	// Remove block2
 	[obj removeBlockForSelector:sel withKey:@"block2"];
-	STAssertFalse([obj respondsToSelector:sel], @"");
+	XCTAssertFalse([obj respondsToSelector:sel], @"");
 }
 
 - (void)test_supermethodOfOverrideBlock
@@ -1246,7 +1246,7 @@
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log-block1", @"");
+	XCTAssertEqualObjects(log, @"log-block1", @"");
 	
 	// Add block2
 	[obj respondsToSelector:sel withKey:@"block2" usingBlock:^NSString*(id receiver) {
@@ -1268,7 +1268,7 @@
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log-block1-block2", @"");
+	XCTAssertEqualObjects(log, @"log-block1-block2", @"");
 	
 	// Add block3
 	[obj respondsToSelector:sel withKey:@"block3" usingBlock:^NSString*(id receiver) {
@@ -1290,28 +1290,28 @@
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log-block1-block2-block3", @"");
+	XCTAssertEqualObjects(log, @"log-block1-block2-block3", @"");
 	
 	// Remove block3
 	[obj removeBlockForSelector:sel withKey:@"block3"];
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log-block1-block2", @"");
+	XCTAssertEqualObjects(log, @"log-block1-block2", @"");
 	
 	// Remove block1
 	[obj removeBlockForSelector:sel withKey:@"block1"];
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log-block2", @"");
+	XCTAssertEqualObjects(log, @"log-block2", @"");
 	
 	// Remove block2
 	[obj removeBlockForSelector:sel withKey:@"block2"];
 	
 	// Call log method
 	log = [obj log];
-	STAssertEqualObjects(log, @"log", @"");
+	XCTAssertEqualObjects(log, @"log", @"");
 }
 
 - (void)test_supermethodReturningScalar
@@ -1342,7 +1342,7 @@
 	// Get age
 	NSUInteger age;
 	age = obj.age;
-	STAssertEquals(age, (NSUInteger)11, @"");
+	XCTAssertEquals(age, (NSUInteger)11, @"");
 }
 
 - (void)test_supermethodWithArgumentReturningScalar
@@ -1373,7 +1373,7 @@
 	// Get age
 	NSUInteger age;
 	age = [obj ageAfterYears:3];
-	STAssertEquals(age, (NSUInteger)14, @"");
+	XCTAssertEquals(age, (NSUInteger)14, @"");
 }
 
 - (void)test_supermethodReturningStructure
@@ -1400,7 +1400,7 @@
 	// Get rect
 	CGRect rect;
 	rect = obj.rect;
-	STAssertEquals(rect, CGRectMake(13.0f, 26.0f, 24.0f, 28.0f), @"");
+	XCTAssertEquals(rect, CGRectMake(13.0f, 26.0f, 24.0f, 28.0f), @"");
 }
 
 - (void)test_supermethodReturningVoid
@@ -1428,11 +1428,11 @@
 	[obj respondsToSelector:@selector(log) withKey:@"key" usingBlock:^(id receiver) {
 		// Do something
 	}];
-	STAssertTrue([obj respondsToSelector:@selector(log)], @"");
+	XCTAssertTrue([obj respondsToSelector:@selector(log)], @"");
 	
 	// Remove block
 	[obj removeBlockForSelector:@selector(log) withKey:@"key"];
-	STAssertTrue(![obj respondsToSelector:@selector(log)], @"");
+	XCTAssertTrue(![obj respondsToSelector:@selector(log)], @"");
 }
 
 - (void)test_removeCurrentBlock
@@ -1448,9 +1448,9 @@
 	}];
 	
 	// Check
-	STAssertTrue([obj respondsToSelector:@selector(log)], @"");
+	XCTAssertTrue([obj respondsToSelector:@selector(log)], @"");
 	[obj performSelector:@selector(log)];
-	STAssertTrue(![obj respondsToSelector:@selector(log)], @"");
+	XCTAssertTrue(![obj respondsToSelector:@selector(log)], @"");
 }
 
 - (void)test_doNotChangeClassFrequentlyWithDynamicBlockManagement
@@ -1463,7 +1463,7 @@
 	[obj respondsToSelector:@selector(log) withKey:@"logBlock" usingBlock:^(id receiver) {
 		return @"Dynamic log";
 	}];
-	STAssertTrue([obj class] != [RETestObject class], @"");
+	XCTAssertTrue([obj class] != [RETestObject class], @"");
 	
 	// Record new class
 	Class newClass;
@@ -1473,12 +1473,12 @@
 	[obj respondsToSelector:@selector(say) withKey:@"sayBlock" usingBlock:^(id receiver) {
 		return @"Dynamic say";
 	}];
-	STAssertEquals([obj class], newClass, @"");
+	XCTAssertEquals([obj class], newClass, @"");
 	
 	// Remove blocks
 	[obj removeBlockForSelector:@selector(log) withKey:@"logBlock"];
 	[obj removeBlockForSelector:@selector(say) withKey:@"sayBlock"];
-	STAssertEquals([obj class], newClass, @"");
+	XCTAssertEquals([obj class], newClass, @"");
 }
 
 - (void)test_doNotChangeClassFrequentlyWithOverrideBlockManagement
@@ -1491,7 +1491,7 @@
 	[obj respondsToSelector:@selector(log) withKey:@"logBlock" usingBlock:^(id receiver) {
 		return @"Overridden log";
 	}];
-	STAssertTrue([obj class] != [RETestObject class], @"");
+	XCTAssertTrue([obj class] != [RETestObject class], @"");
 	
 	// Record new class
 	Class newClass;
@@ -1501,12 +1501,12 @@
 	[obj respondsToSelector:@selector(say) withKey:@"sayBlock" usingBlock:^(id receiver) {
 		return @"Overridden say";
 	}];
-	STAssertEquals([obj class], newClass, @"");
+	XCTAssertEquals([obj class], newClass, @"");
 	
 	// Remove blocks
 	[obj removeBlockForSelector:@selector(log) withKey:@"logBlock"];
 	[obj removeBlockForSelector:@selector(say) withKey:@"sayBlock"];
-	STAssertEquals([obj class], newClass, @"");
+	XCTAssertEquals([obj class], newClass, @"");
 }
 
 - (void)test_setConformableToProtocol
@@ -1520,15 +1520,15 @@
 	// Make obj
 	id obj;
 	obj = [[[NSObject alloc] init] autorelease];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj conformable to protocol
 	[obj setConformable:YES toProtocol:protocol withKey:key];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj not-conformable to protocol
 	[obj setConformable:NO toProtocol:protocol withKey:key];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 }
 
 - (void)test_setConformableToProtocol__conformsToIncorporatedProtocols
@@ -1539,8 +1539,8 @@
 	
 	// Set obj conformable to NSSecureCoding
 	[obj setConformable:YES toProtocol:@protocol(NSSecureCoding) withKey:@"key"];
-	STAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 }
 
 - (void)test_setConformableToProtocol__canNotRemoveIncorporatedProtocol
@@ -1554,8 +1554,8 @@
 	
 	// Set not conformable to NSCoding
 	[obj setConformable:NO toProtocol:@protocol(NSCoding) withKey:@"key"];
-	STAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 }
 
 - (void)test_setConformableToProtocol__managesProtocolsBySpecifiedProtocol
@@ -1568,15 +1568,15 @@
 	[obj setConformable:YES toProtocol:@protocol(NSSecureCoding) withKey:@"key"];
 	[obj setConformable:YES toProtocol:@protocol(NSCoding) withKey:@"key"];
 	[obj setConformable:NO toProtocol:@protocol(NSSecureCoding) withKey:@"key"];
-	STAssertTrue(![obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue(![obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 	
 	// Set obj conformable to NSSecureCoding and NSCoding then remove NSCoding
 	[obj setConformable:YES toProtocol:@protocol(NSSecureCoding) withKey:@"key"];
 	[obj setConformable:YES toProtocol:@protocol(NSCoding) withKey:@"key"];
 	[obj setConformable:NO toProtocol:@protocol(NSCoding) withKey:@"key"];
-	STAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSSecureCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 }
 
 - (void)test_setConformableToProtocol__withNilKey
@@ -1587,7 +1587,7 @@
 	
 	// Set conformable
 	[obj setConformable:YES toProtocol:@protocol(NSCoding) withKey:nil];
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 }
 
 - (void)test_setConformableToProtocolWithInvalidArguments
@@ -1604,22 +1604,22 @@
 	
 	// Try to set obj conformable with nil-protocol
 	[obj setConformable:YES toProtocol:nil withKey:key];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj conformable to protocol
 	[obj setConformable:YES toProtocol:protocol withKey:key];
 	
 	// Try to set obj not-conformable with nil-protocol
 	[obj setConformable:NO toProtocol:nil withKey:key];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Try to set obj not-conformable with nil-key
 	[obj setConformable:NO toProtocol:protocol withKey:nil];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj not-conformable
 	[obj setConformable:NO toProtocol:protocol withKey:key];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 }
 
 - (void)test_setConformableToProtocolWithKeyMethodStacksKeys
@@ -1636,19 +1636,19 @@
 	
 	// Set obj conformable to the protocol with key
 	[obj setConformable:YES toProtocol:protocol withKey:key];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj conformable to the protocol with other key
 	[obj setConformable:YES toProtocol:protocol withKey:@"OtherKey"];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Try to set obj not-conformable to the protocol
 	[obj setConformable:NO toProtocol:protocol withKey:@"OtherKey"];
-	STAssertTrue([obj conformsToProtocol:protocol], @"");
+	XCTAssertTrue([obj conformsToProtocol:protocol], @"");
 	
 	// Set obj not-conformable to the protocol
 	[obj setConformable:NO toProtocol:protocol withKey:key];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 }
 
 - (void)test_setConformableToProtocolDoesNotStackSameKeyForAProtocol
@@ -1666,7 +1666,7 @@
 	[obj setConformable:YES toProtocol:protocol withKey:key];
 	[obj setConformable:YES toProtocol:protocol withKey:key];
 	[obj setConformable:NO toProtocol:protocol withKey:key];
-	STAssertFalse([obj conformsToProtocol:protocol], @"");
+	XCTAssertFalse([obj conformsToProtocol:protocol], @"");
 }
 
 - (void)test_setConformableToProtocolAllowsSameKeyForOtherProtocol
@@ -1682,18 +1682,18 @@
 	// Set obj conformable to NSCopying and NSCoding
 	[obj setConformable:YES toProtocol:@protocol(NSCopying) withKey:key];
 	[obj setConformable:YES toProtocol:@protocol(NSCoding) withKey:key];
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCopying)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCopying)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 	
 	// Set obj not-conformable to NSCopying
 	[obj setConformable:NO toProtocol:@protocol(NSCopying) withKey:key];
-	STAssertFalse([obj conformsToProtocol:@protocol(NSCopying)], @"");
-	STAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertFalse([obj conformsToProtocol:@protocol(NSCopying)], @"");
+	XCTAssertTrue([obj conformsToProtocol:@protocol(NSCoding)], @"");
 	
 	// Set obj not-conformable to NSCoding
 	[obj setConformable:NO toProtocol:@protocol(NSCoding) withKey:key];
-	STAssertFalse([obj conformsToProtocol:@protocol(NSCopying)], @"");
-	STAssertFalse([obj conformsToProtocol:@protocol(NSCoding)], @"");
+	XCTAssertFalse([obj conformsToProtocol:@protocol(NSCopying)], @"");
+	XCTAssertFalse([obj conformsToProtocol:@protocol(NSCoding)], @"");
 }
 
 - (void)test_keyOfProtocolIsDeallocated
@@ -1725,7 +1725,7 @@
 	}
 	
 	// Check
-	STAssertTrue(deallocated, @"");
+	XCTAssertTrue(deallocated, @"");
 }
 
 - (void)test_respondsToSelector_callWithNil
@@ -1734,8 +1734,8 @@
 	id obj;
 	BOOL responds;
 	obj = [[[NSObject alloc] init] autorelease];
-	STAssertNoThrow(responds = [obj respondsToSelector:nil], @"");
-	STAssertTrue(!responds, @"");
+	XCTAssertNoThrow(responds = [obj respondsToSelector:nil], @"");
+	XCTAssertTrue(!responds, @"");
 }
 
 - (void)test_conformsToProtocol_callWithNil
@@ -1743,7 +1743,7 @@
 	// Make obj
 	id obj;
 	obj = [[[NSObject alloc] init] autorelease];
-	STAssertNoThrow([obj conformsToProtocol:nil], @"");
+	XCTAssertNoThrow([obj conformsToProtocol:nil], @"");
 }
 
 @end

@@ -1,8 +1,4 @@
-/*
- REResponder.m
- 
- Copyright ©2012 Kazki Miura. All rights reserved.
-*/
+/* REResponder.m	 Copyright ©2012 Kazki Miura. All rights reserved.	*/
 
 #import <dlfcn.h>
 #import "execinfo.h"
@@ -12,92 +8,66 @@
 #if __has_feature(objc_arc)
 	#error This code needs compiler option -fno-objc-arc
 #endif
+																												// Constants
+#define kClassNamePrefix 									@"REResponder"
+#define kProtocolsAssociationKey							@"REResponder_protocols"
+#define kBlocksAssociationKey 							@"REResponder_blocks"
+#define kBlockInfosMethodSignatureAssociationKey 	@"methodSignature"
+																												// Keys for protocolInfo
+#define kProtocolInfoKeysKey 								@"keys"
+#define kProtocolInfoIncorporatedProtocolNamesKey 	@"incorporatedProtocolNames"
+																												// Keys for blockInfo
+#define kBlockInfoImpKey	@"imp"
+#define kBlockInfoKeyKey	@"key"
 
-
-// Constants
-static NSString* const kClassNamePrefix = @"REResponder";
-static NSString* const kProtocolsAssociationKey = @"REResponder_protocols";
-static NSString* const kBlocksAssociationKey = @"REResponder_blocks";
-static NSString* const kBlockInfosMethodSignatureAssociationKey = @"methodSignature";
+/*// Constants
+static NSString* const kClassNamePrefix 									= @"REResponder";
+static NSString* const kProtocolsAssociationKey 						= @"REResponder_protocols";
+static NSString* const kBlocksAssociationKey 							= @"REResponder_blocks";
+static NSString* const kBlockInfosMethodSignatureAssociationKey 	= @"methodSignature";
 
 // Keys for protocolInfo
-static NSString* const kProtocolInfoKeysKey = @"keys";
-static NSString* const kProtocolInfoIncorporatedProtocolNamesKey = @"incorporatedProtocolNames";
-
+static NSString* const kProtocolInfoKeysKey 								= @"keys";
+static NSString* const kProtocolInfoIncorporatedProtocolNamesKey 	= @"incorporatedProtocolNames";
 // Keys for blockInfo
 static NSString* const kBlockInfoImpKey = @"imp";
-static NSString* const kBlockInfoKeyKey = @"key";
+static NSString* const kBlockInfoKeyKey = @"key";	*/
 
 // Dummy block and its imp
-static id (^kDummyBlock)(id, SEL, ...) = ^id (id receiver, SEL selector, ...) {
-	return nil;
-};
+static id (^kDummyBlock)(id, SEL, ...) = ^id (id receiver, SEL selector, ...) {	return nil;	};
 static IMP _dummyBlockImp = NULL;
 
-
 @implementation NSObject (REResponder)
-
-//--------------------------------------------------------------//
 #pragma mark -- Setup --
-//--------------------------------------------------------------//
-
-- (BOOL)REResponder_X_conformsToProtocol:(Protocol*)protocol
-{
+- (BOOL)REResponder_X_conformsToProtocol:(Protocol*)protocol	{
 	// Filter
-	if (!protocol) {
-		return NO;
-	}
-	
+	if (!protocol)	return NO;
 	// original
-	if ([self REResponder_X_conformsToProtocol:protocol]) {
-		return YES;
-	}
-	
+	if ([self REResponder_X_conformsToProtocol:protocol]) return YES;
 	// Check protocols
 	@synchronized (self) {
 		// Get protocols
-		NSMutableDictionary *protocols;
-		protocols = [self associatedValueForKey:kProtocolsAssociationKey];
-		if (!protocols) {
-			return NO;
-		}
-		
-		// Find protocolName
-		NSString *protocolName;
-		__block BOOL found = NO;
-		protocolName = NSStringFromProtocol(protocol);
+		NSMutableDictionary *protocols = [self associatedValueForKey:kProtocolsAssociationKey];
+		if (!protocols)	return NO;
+		__block BOOL found = NO; // Find protocolName
+		NSString *protocolName = NSStringFromProtocol(protocol);
 		[protocols enumerateKeysAndObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(NSString *aProtocolName, NSMutableDictionary *protocolInfo, BOOL *stop) {
-			if ([aProtocolName isEqualToString:protocolName]
-				|| [protocolInfo[kProtocolInfoIncorporatedProtocolNamesKey] containsObject:protocolName]
-			){
-				found = YES;
-				*stop = YES;
-			}
+			found = [aProtocolName isEqualToString:protocolName] || [protocolInfo[kProtocolInfoIncorporatedProtocolNamesKey] containsObject:protocolName];
+			if (found) *stop = YES;
 		}];
-		
 		return found;
 	}
 }
 
 - (BOOL)REResponder_X_respondsToSelector:(SEL)aSelector
 {
-	@synchronized (self) {
-		// Check blockInfos
-		NSMutableArray *blockInfos;
-		NSString *selectorName;
-		selectorName = NSStringFromSelector(aSelector);
-		blockInfos = [self associatedValueForKey:kBlocksAssociationKey][selectorName];
-		if (blockInfos) {
-			if ([blockInfos count]) {
-				return YES;
-			}
-			
-			// Check originalMethod
-			IMP originalMethod;
-			originalMethod = method_getImplementation(class_getInstanceMethod([[self class] superclass], NSSelectorFromString(selectorName)));
-			return (originalMethod != nil);
-		}
-		
+	@synchronized (self) {				// Check blockInfos
+
+		NSString 	  *selectorName = NSStringFromSelector(aSelector);
+		NSMutableArray  *blockInfos = [self associatedValueForKey:kBlocksAssociationKey][selectorName];
+		if (blockInfos)
+			return blockInfos.count ? NO :			// Check originalMethod			IMP originalMethod = ;
+			(method_getImplementation(class_getInstanceMethod(self.class.superclass, NSSelectorFromString(selectorName))) != nil);
 		// original
 		return [self REResponder_X_respondsToSelector:aSelector];
 	}
@@ -109,61 +79,46 @@ static IMP _dummyBlockImp = NULL;
 		@synchronized (self) {
 			// Remove protocols
 			[self associateValue:nil forKey:kProtocolsAssociationKey policy:OBJC_ASSOCIATION_RETAIN];
-			
 			// Remove blocks
-			NSMutableDictionary *blocks;
-			blocks = [self associatedValueForKey:kBlocksAssociationKey];
+			NSMutableDictionary *blocks = [self associatedValueForKey:kBlocksAssociationKey];
 			[blocks enumerateKeysAndObjectsUsingBlock:^(NSString *selectorName, NSMutableArray *blockInfos, BOOL *stop) {
-				while ([blockInfos count]) {
-					NSDictionary *blockInfo;
-					blockInfo = [blockInfos lastObject];
-					[self removeBlockForSelector:NSSelectorFromString(selectorName) withKey:blockInfo[kBlockInfoKeyKey]];
-				}
+				for (id thing in blockInfos)
+//					NSDictionary *blockInfo = [blockInfos lastObject];
+					[self removeBlockForSelector:NSSelectorFromString(selectorName) withKey:[thing valueForKey:kBlockInfoKeyKey]];
 			}];
 			[self associateValue:nil forKey:kBlocksAssociationKey policy:OBJC_ASSOCIATION_RETAIN];
 			
 			// Dispose classes
-			NSString *className;
-			className = [NSString stringWithUTF8String:class_getName([self class])];
+			NSString *className = [NSString stringWithUTF8String:class_getName(self.class)];
 			if ([className hasPrefix:kClassNamePrefix]) {
 				// Dispose NSKVONotifying subclass
 				Class kvoClass;
-				kvoClass = NSClassFromString([NSString stringWithFormat:@"NSKVONotifying_%@", className]);
-				if (kvoClass) {
+				if ((kvoClass  = NSClassFromString([@"NSKVONotifying_" stringByAppendingString:className])))
 					objc_disposeClassPair(kvoClass);
-				}
-				
+
 				// Dispose class
-				Class class;
-				class = [self class];
-				[self willChangeClass:[self superclass]];
-				object_setClass(self, [self superclass]);
+				Class class = [self class];
+				[self willChangeClass:self.superclass];
+				object_setClass(self, self.superclass);
 				[self didChangeClass:class];
 				objc_disposeClassPair(class);
 			}
 		}
 	}
-	
-	// original
-	[self REResponder_X_dealloc];
+	[self REResponder_X_dealloc]; 	// original
 }
 
-+ (void)load
-{
-	@autoreleasepool {
++ (void)load	{	static dispatch_once_t onceToken;
+
+  	dispatch_once(&onceToken, ^{
 		// Exchange instance methods
 		[self exchangeInstanceMethodsWithAdditiveSelectorPrefix:@"REResponder_X_" selectors:
-			@selector(conformsToProtocol:),
-			@selector(respondsToSelector:),
-			@selector(dealloc),
-			nil
-		];
-	}
+			@selector(conformsToProtocol:), @selector(respondsToSelector:), 	@selector(dealloc),nil];
+
+  });
 }
 
-//--------------------------------------------------------------//
 #pragma mark -- Util --
-//--------------------------------------------------------------//
 
 - (NSDictionary*)REResponder_blockInfoForSelector:(SEL)selector withKey:(id)key blockInfos:(NSMutableArray**)outBlockInfos
 {
@@ -239,9 +194,7 @@ static IMP _dummyBlockImp = NULL;
 	return imp;
 }
 
-//--------------------------------------------------------------//
 #pragma mark -- Block --
-//--------------------------------------------------------------//
 
 - (void)respondsToSelector:(SEL)selector withKey:(id)inKey usingBlock:(id)block
 {
@@ -400,9 +353,7 @@ static IMP _dummyBlockImp = NULL;
 	}
 }
 
-//--------------------------------------------------------------//
 #pragma mark -- Current Block --
-//--------------------------------------------------------------//
 
 - (IMP)supermethodOfCurrentBlock
 {
@@ -462,9 +413,7 @@ static IMP _dummyBlockImp = NULL;
 	[self removeBlockForSelector:selector withKey:blockInfo[kBlockInfoKeyKey]];
 }
 
-//--------------------------------------------------------------//
 #pragma mark -- Conformance --
-//--------------------------------------------------------------//
 
 - (void)setConformable:(BOOL)conformable toProtocol:(Protocol*)protocol withKey:(id)inKey
 {
