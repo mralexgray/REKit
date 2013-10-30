@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B9D8778181D18B500043489 /* NSObject+REObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA42138167DE21F0052D11E /* NSObject+REObserver.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7B9D8779181D18B500043489 /* NSObject+REObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA42139167DE21F0052D11E /* NSObject+REObserver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7B9D877A181D18B500043489 /* NSObject+REResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA4213A167DE21F0052D11E /* NSObject+REResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7B9D877B181D18B500043489 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA4213B167DE21F0052D11E /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7B9D877C181D18B500043489 /* REKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA4213C167DE21F0052D11E /* REKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -46,7 +45,7 @@
 /* Begin PBXFileReference section */
 		7B9D874C181D183700043489 /* Mac-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Mac-StaticLibrary.xcconfig"; path = "/Volumes/2T/ServiceData/AtoZ.framework/AtoZ/AtoZAutoBox/../../xcconfigs/Mac OS X/Mac-StaticLibrary.xcconfig"; sourceTree = "<absolute>"; };
 		7B9D8751181D185F00043489 /* libREKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libREKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B9D877F181D18F900043489 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = file; name = Test.xcconfig; path = ../../../../../xcconfigs/Base/Configurations/Test.xcconfig; sourceTree = "<group>"; };
+		7B9D877F181D18F900043489 /* Test.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Test.xcconfig; path = ../../../../../xcconfigs/Base/Configurations/Test.xcconfig; sourceTree = "<group>"; };
 		EBA420DB167DE1BE0052D11E /* Mac_REKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mac_REKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBA420E7167DE1BE0052D11E /* Mac_REKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Mac_REKit-Info.plist"; sourceTree = "<group>"; };
 		EBA420E9167DE1BE0052D11E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -329,7 +328,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B9D8779181D18B500043489 /* NSObject+REObserver.m in Sources */,
 				7B9D877B181D18B500043489 /* NSObject+REResponder.m in Sources */,
 				7B9D877E181D18B500043489 /* REUtil.m in Sources */,
 			);
@@ -568,6 +566,7 @@
 				7B9D8774181D186000043489 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EBA420D5167DE1BE0052D11E /* Build configuration list for PBXProject "Mac_REKit" */ = {
 			isa = XCConfigurationList;
